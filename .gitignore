@@ -1,0 +1,28 @@
+# Laravel
+/src/node_modules
+/src/public/hot
+/src/public/storage
+/src/storage/*.key
+/src/vendor
+/src/.env
+/src/.env.backup
+/src/.phpunit.result.cache
+
+# Docker
+docker-compose.override.yml
+
+# IDE
+/.idea
+/.vscode
+
+# Logs
+npm-debug.log
+yarn-error.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Документация
+TZ.md
+DOCKER_SETUP.md

@@ -1,0 +1,66 @@
+services:
+  # PHP-FPM + Laravel приложение
+  app:
+    build:
+      context: .
+      dockerfile: .docker/php/Dockerfile
+    container_name: mcrm_app
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ./src:/var/www
+    networks:
+      - mcrm_network
+    depends_on:
+      - mysql
+      - redis
+
+  # Nginx веб-сервер
+  nginx:
+    image: nginx:alpine
+    container_name: mcrm_nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./src:/var/www
+      - ./.docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - mcrm_network
+    depends_on:
+      - app
+
+  # MySQL база данных
+  mysql:
+    image: mysql:8.0
+    container_name: mcrm_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: mcrm
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: mcrm_user
+      MYSQL_PASSWORD: secret
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - mcrm_network
+
+  # Redis для кеша и очередей
+  redis:
+    image: redis:alpine
+    container_name: mcrm_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    networks:
+      - mcrm_network
+
+networks:
+  mcrm_network:
+    driver: bridge
+
+volumes:
+  mysql_data:
+    driver: local
