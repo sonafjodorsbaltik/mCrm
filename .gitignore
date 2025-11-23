@@ -24,5 +24,6 @@ yarn-error.log
 Thumbs.db
 
 # Документация
-TZ.md
-DOCKER_SETUP.md
+#TZ.md
+#DOCKER_SETUP.md
+#MY_INSTRUKCION_CODE.md
