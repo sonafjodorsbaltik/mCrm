@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Enums\TicketStatusEnum;
 
 return new class extends Migration
 {
@@ -16,7 +17,10 @@ return new class extends Migration
             $table->foreignId('customer_id')->constrained()->cascadeOnDelete();
             $table->string('subject');
             $table->text('content');
-            $table->string('status')->default('new');
+
+            $table->enum('status', TicketStatusEnum::values())
+                    ->default(TicketStatusEnum::NEW->value);
+
             $table->timestamp('replied_at')->nullable();
             $table->timestamps();
         });

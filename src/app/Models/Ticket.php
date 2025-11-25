@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Enums\TicketStatusEnum;
 
 class Ticket extends Model
 {
@@ -20,6 +21,7 @@ class Ticket extends Model
     ];
 
     protected $casts = [
+        'status' => TicketStatusEnum::class,
         'replied_at' => 'datetime',
     ];
 
