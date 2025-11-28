@@ -6,6 +6,11 @@ use Illuminate\Http\UploadedFile;
 
 readonly class CreateTicketDto 
 {
+
+    /** 
+    * @param \Illuminate\Http\UploadedFile[]|null $files 
+    */
+
     public function __construct(
         public string $customerName,
         public string $customerPhone,
