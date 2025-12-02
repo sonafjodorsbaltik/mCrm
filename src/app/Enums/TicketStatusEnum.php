@@ -19,5 +19,13 @@ enum TicketStatusEnum: string
             self::IN_PROGRESS => 'In Progress',
             self::CLOSED => 'Closed',
         };
-    }    
+    }
+    
+    public function requiresReplyDate(): bool
+    {
+        return match($this) {
+            self::IN_PROGRESS, self::CLOSED => true,
+            default => false,
+        };
+    }
 }

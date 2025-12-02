@@ -45,10 +45,6 @@ class TicketRepository implements TicketRepositoryInterface
 
         $ticket->status = $status;
 
-        if (in_array($status, [TicketStatusEnum::IN_PROGRESS, TicketStatusEnum::CLOSED])) {
-            $ticket->replied_at = now();
-        }
-
         return $ticket->save();
     }
 
