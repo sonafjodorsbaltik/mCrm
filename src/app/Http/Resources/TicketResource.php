@@ -13,7 +13,8 @@ class TicketResource extends JsonResource
             'id' => $this->id,
             'subject' => $this->subject,
             'status' => $this->status->label(),
-            'created_at' => $this->created_at->toDateTimeString(),
+            'status_code' => $this->status->value,
+            'created_at' => $this->created_at->toISOString(),
             'customer_name' => $this->customer->name,
         ];
     }
