@@ -17,10 +17,10 @@ class E164PhoneNumber implements ValidationRule
             $numberProto = $phoneUtil->parse($value, null);
 
             if (!$phoneUtil->isValidNumber($numberProto)) {
-                $fail('The :attribute must be a valid phone number.');
+                $fail(__('validation.phone_valid'));
             }
         } catch (NumberParseException $e) {
-            $fail('The :attribute format is invalid.');
+            $fail(__('validation.phone_format'));
         }
     }
 }

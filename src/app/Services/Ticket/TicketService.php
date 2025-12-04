@@ -3,6 +3,7 @@
 namespace App\Services\Ticket;
 
 use App\DTOs\CreateTicketDto;
+use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
 use App\Repositories\Contracts\TicketRepositoryInterface;
 use App\Services\Customer\CustomerService;
@@ -24,7 +25,7 @@ class TicketService
         if (!$this->rateLimitService->canSubmitTicket($dto->customerPhone, $dto->customerEmail)) {
             throw new TooManyRequestsHttpException(
                 retryAfter: 86400,
-                message: 'You can submit only one ticket per 24 hours.'
+                message: __('validation.rate_limit_ticket')
             );
         }
 
@@ -36,7 +37,7 @@ class TicketService
                 'customer_id' => $customer->id,
                 'subject' => $dto->subject,
                 'content' => $dto->content,
-                'status' => \App\Enums\TicketStatusEnum::NEW,
+                'status' => TicketStatusEnum::NEW,
             ]);
 
             $this->ticketFileService->attachFiles($ticket, $dto->files);
