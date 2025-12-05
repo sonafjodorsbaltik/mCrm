@@ -31,6 +31,12 @@
                 <nav class="admin-nav">
                     <a href="{{ route('admin.dashboard') }}">Dashboard</a>
                     <a href="{{ route('admin.tickets.index') }}">Tickets</a>
+                    
+                    @can('viewAny', App\Models\User::class)
+                        <a href="{{ route('admin.users.index') }}">Users</a>
+                    @endcan
+                    
+                    <a href="{{ route('admin.profile.edit') }}">Profile</a>
                 </nav>
                 
                 <div class="user-menu">

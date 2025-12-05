@@ -532,3 +532,63 @@
     border-color: #2d5a34;
     color: #7ed699;
 }
+
+/* ===================================
+   FORM STYLES
+   =================================== */
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: var(--text-light);
+}
+
+.dark-theme .form-group label {
+    color: var(--text-dark);
+}
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+.text-error {
+    color: var(--error);
+    font-size: 12px;
+    margin-top: 5px;
+    display: block;
+}
+
+/* Error Alert */
+.alert-error {
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+    padding: 12px 20px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.dark-theme .alert-error {
+    background: #3a1e1f;
+    border-color: #5a3234;
+    color: #f59ba5;
+}
+
+/* Role Badges */
+.status-admin {
+    background: #dc3545;
+    color: #fff;
+}
+
+.status-manager {
+    background: #007bff;
+    color: #fff;
+}
