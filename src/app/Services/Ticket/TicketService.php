@@ -33,7 +33,7 @@ class TicketService
 
             $customer = $this->customerService->findOrCreate($dto);
 
-            $ticket = $this->ticketRepository->create($dto);
+            $ticket = $this->ticketRepository->create($dto, $customer->id);
 
             $this->ticketFileService->attachFiles($ticket, $dto->files);
 

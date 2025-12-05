@@ -9,18 +9,14 @@ use App\Enums\TicketStatusEnum;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use App\DTOs\TicketStatisticsDto;
-use App\Models\Customer;
 use Carbon\Carbon;
 
 class TicketRepository implements TicketRepositoryInterface
 {
-    public function create(CreateTicketDto $dto): Ticket
+    public function create(CreateTicketDto $dto, int $customerId): Ticket
     {
-        // Customer should already exist, created by CustomerService
-        $customer = Customer::where('email', $dto->customerEmail)->firstOrFail();
-        
         return Ticket::create([
-            'customer_id' => $customer->id,
+            'customer_id' => $customerId,
             'subject' => $dto->subject,
             'content' => $dto->content,
             'status' => TicketStatusEnum::NEW,
@@ -113,8 +109,9 @@ class TicketRepository implements TicketRepositoryInterface
         int $hours = 24
     ): ?Ticket {
         return Ticket::whereHas('customer', function ($query) use ($phone, $email) {
+                // Check if BOTH phone AND email match (prevent bypass)
                 $query->where('phone', $phone)
-                      ->orWhere('email', $email);
+                      ->where('email', $email);
             })
             ->where('created_at', '>=', Carbon::now()->subHours($hours))
             ->latest()

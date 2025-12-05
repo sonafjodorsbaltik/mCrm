@@ -79,6 +79,9 @@ class TicketController extends Controller
         // Check if user has permission to delete
         $this->authorize('delete', $ticket);
         
+        // Clear all associated media files before deletion
+        $ticket->clearMediaCollection();
+        
         // Soft delete the ticket
         $ticket->delete();
         

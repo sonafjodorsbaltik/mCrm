@@ -50,14 +50,18 @@ class UserController extends Controller
             'password' => 'required|string|min:8|confirmed',
         ]);
         
-        $user = User::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'password' => Hash::make($validated['password']),
-        ]);
-        
-        // Assign manager role
-        $user->assignRole('manager');
+        $user = \Illuminate\Support\Facades\DB::transaction(function () use ($validated) {
+            $user = User::create([
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'password' => Hash::make($validated['password']),
+            ]);
+            
+            // Assign manager role
+            $user->assignRole('manager');
+            
+            return $user;
+        });
         
         return redirect()
             ->route('admin.users.index')

@@ -11,7 +11,7 @@ use App\DTOs\CreateTicketDto;
 
 interface TicketRepositoryInterface
 {
-    public function create(CreateTicketDto $dto): Ticket;
+    public function create(CreateTicketDto $dto, int $customerId): Ticket;
 
     public function findById(int $id): ?Ticket;
 
