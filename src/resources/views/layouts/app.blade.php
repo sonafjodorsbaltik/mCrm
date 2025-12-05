@@ -73,6 +73,20 @@
                 themeIcon.textContent = isDark ? '●' : '○';
                 localStorage.setItem('theme', isDark ? 'dark' : 'light');
             });
+            
+            // Delete confirmation handler
+            document.addEventListener('submit', (e) => {
+                const form = e.target;
+                if (form.classList.contains('delete-form')) {
+                    const button = form.querySelector('[data-confirm]');
+                    if (button) {
+                        const message = button.getAttribute('data-confirm');
+                        if (!confirm(message)) {
+                            e.preventDefault();
+                        }
+                    }
+                }
+            });
         </script>
         
         <!-- Flatpickr Date Picker -->

@@ -43,10 +43,10 @@
                 <td>
                     @can('delete', $user)
                         @if($user->id !== auth()->id())
-                        <form method="POST" action="{{ route('admin.users.destroy', $user) }}" style="display: inline;">
+                        <form method="POST" action="{{ route('admin.users.destroy', $user) }}" style="display: inline;" class="delete-form">
                             @csrf
                             @method('DELETE')
-                            <button type="button" class="btn-delete" onclick="if(confirm('Delete user {{ $user->name }}?')) { this.closest('form').submit(); }">
+                            <button type="submit" class="btn-delete" data-confirm="Are you sure you want to delete user {{ $user->name }}?">
                                 Delete
                             </button>
                         </form>
