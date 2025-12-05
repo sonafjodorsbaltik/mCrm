@@ -28,15 +28,19 @@
             <!-- Date From -->
             <div class="filter-group">
                 <label for="date_from">From Date</label>
-                <input type="date" name="date_from" id="date_from" 
-                       value="{{ request('date_from') }}" class="filter-input">
+                <input type="text" name="date_from" id="date_from" 
+                       value="{{ request('date_from') }}" 
+                       placeholder="YYYY-MM-DD"
+                       class="filter-input">
             </div>
 
             <!-- Date To -->
             <div class="filter-group">
                 <label for="date_to">To Date</label>
-                <input type="date" name="date_to" id="date_to" 
-                       value="{{ request('date_to') }}" class="filter-input">
+                <input type="text" name="date_to" id="date_to" 
+                       value="{{ request('date_to') }}" 
+                       placeholder="YYYY-MM-DD"
+                       class="filter-input">
             </div>
 
             <!-- Search -->

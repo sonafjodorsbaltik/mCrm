@@ -11,6 +11,10 @@
         <link rel="stylesheet" href="{{ asset('css/loft-theme.css') }}">
         <link rel="stylesheet" href="{{ asset('css/admin-theme.css') }}">
         
+        <!-- Flatpickr Date Picker -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css">
+        
         @stack('styles')
     </head>
     <body>
@@ -62,6 +66,24 @@
                 const isDark = document.body.classList.contains('dark-theme');
                 themeIcon.textContent = isDark ? '●' : '○';
                 localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            });
+        </script>
+        
+        <!-- Flatpickr Date Picker -->
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        <script>
+            // Initialize Flatpickr on date inputs
+            document.addEventListener('DOMContentLoaded', function() {
+                const dateInputs = document.querySelectorAll('input[name="date_from"], input[name="date_to"]');
+                
+                dateInputs.forEach(input => {
+                    flatpickr(input, {
+                        dateFormat: 'Y-m-d',
+                        allowInput: true,
+                        locale: 'en', // Force English
+                        theme: document.body.classList.contains('dark-theme') ? 'dark' : 'light'
+                    });
+                });
             });
         </script>
         
