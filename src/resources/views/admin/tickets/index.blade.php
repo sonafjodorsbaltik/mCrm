@@ -91,13 +91,12 @@
                     <a href="{{ route('admin.tickets.show', $ticket) }}">View</a>
                     
                     @can('delete', $ticket)
-                        <form method="POST" 
-                              action="{{ route('admin.tickets.destroy', $ticket) }}" 
-                              class="delete-form"
-                              data-confirm="Are you sure you want to delete ticket #{{ $ticket->id }}?">
+                        <form method="POST" action="{{ route('admin.tickets.destroy', $ticket) }}" style="display: inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn-delete">Delete</button>
+                            <button type="button" class="btn-delete" onclick="if(confirm('Delete ticket #{{ $ticket->id }}?')) { this.closest('form').submit(); }">
+                                Delete
+                            </button>
                         </form>
                     @endcan
                 </td>
@@ -116,16 +115,4 @@
         {{ $tickets->appends(request()->query())->links('pagination::loft') }}
     </div>
     @endif
-    
-    <script>
-        // Handle delete confirmation (executing immediately on page load)
-        document.querySelectorAll('.delete-form').forEach(form => {
-            form.addEventListener('submit', function(e) {
-                const message = this.dataset.confirm;
-                if (!confirm(message)) {
-                    e.preventDefault();
-                }
-            });
-        });
-    </script>
 </x-app-layout>
