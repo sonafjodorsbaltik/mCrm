@@ -85,6 +85,51 @@
                 height: 28px;
             }
         }
+
+        /* Alert Styles - Enhanced for better visibility */
+        .alert {
+            padding: 16px 20px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 15px;
+            font-weight: 500;
+            line-height: 1.5;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            display: none;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .alert.show {
+            opacity: 1;
+            transform: translateY(0);
+            display: block;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 2px solid #c3e6cb;
+        }
+
+        .dark-theme .alert-success {
+            background-color: #1e4620;
+            color: #a3cfbb;
+            border: 2px solid #2d5f31;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 2px solid #f5c6cb;
+        }
+
+        .dark-theme .alert-error {
+            background-color: #4a1f23;
+            color: #e8a1a8;
+            border: 2px solid #6b2d32;
+        }
     </style>
 </head>
 <body>
@@ -220,12 +265,18 @@
                 const data = await response.json();
 
                 if (response.ok) {
-                    // Success
-                    showAlert('success', 'Request submitted successfully! We will contact you shortly.');
-                    form.reset();
+                    // Success - scroll to top to see the message
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
                     
-                    // Auto-hide message after 5 seconds
-                    setTimeout(() => hideAlert(), 5000);
+                    // Show success message with icon
+                    showAlert('success', '✓ Request submitted successfully! We will contact you shortly.');
+                    
+                    // Reset form and file input
+                    form.reset();
+                    fileNamesDiv.textContent = 'No files selected';
+                    
+                    // Auto-hide message after 8 seconds (more time to notice)
+                    setTimeout(() => hideAlert(), 8000);
                 } else if (response.status === 422) {
                     // Validation errors
                     showValidationErrors(data.errors);

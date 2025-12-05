@@ -14,12 +14,10 @@ class CustomerService
     
     public function findOrCreate(CreateTicketDto $dto): Customer
     {  
-        return $this->customerRepository->updateOrCreate(
-            ['email' => $dto->customerEmail],
-            [
-                'phone' => $dto->customerPhone,
-                'name' => $dto->customerName,
-            ]
-        );      
+        return $this->customerRepository->firstOrCreate([
+            'email' => $dto->customerEmail,
+            'phone' => $dto->customerPhone,
+            'name' => $dto->customerName,
+        ]);      
     }
 }

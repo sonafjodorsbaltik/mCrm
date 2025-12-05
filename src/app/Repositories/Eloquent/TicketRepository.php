@@ -15,14 +15,9 @@ class TicketRepository implements TicketRepositoryInterface
 {
     public function create(CreateTicketDto $dto): Ticket
     {
-        $customer = Customer::updateOrCreate(
-            ['email' => $dto->customerEmail],
-            [
-                'name' => $dto->customerName,
-                'phone' => $dto->customerPhone,
-            ]
-        );
-
+        // Customer should already exist, created by CustomerService
+        $customer = Customer::where('email', $dto->customerEmail)->firstOrFail();
+        
         return Ticket::create([
             'customer_id' => $customer->id,
             'subject' => $dto->subject,
