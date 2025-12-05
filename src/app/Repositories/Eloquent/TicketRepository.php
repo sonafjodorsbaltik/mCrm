@@ -6,6 +6,7 @@ use App\Models\Ticket;
 use App\Repositories\Contracts\TicketRepositoryInterface;
 use App\DTOs\CreateTicketDto;
 use App\Enums\TicketStatusEnum;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use App\DTOs\TicketStatisticsDto;
 use App\Models\Customer;
@@ -43,7 +44,7 @@ class TicketRepository implements TicketRepositoryInterface
         return $ticket->save();
     }
 
-    public function getWithFilters(array $filters): Collection
+    public function getWithFilters(array $filters): Builder
     {
         $query = Ticket::with('customer');
         
@@ -71,7 +72,7 @@ class TicketRepository implements TicketRepositoryInterface
             });
         }
         
-        return $query->latest()->get();
+        return $query->latest();
     }
 
     public function getStatistics(string $period): TicketStatisticsDto

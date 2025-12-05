@@ -3,6 +3,7 @@
 namespace App\Repositories\Contracts;
 
 use App\Models\Ticket;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use App\Enums\TicketStatusEnum;
 use App\DTOs\TicketStatisticsDto;
@@ -16,7 +17,7 @@ interface TicketRepositoryInterface
 
     public function updateStatus(int $id, TicketStatusEnum $status): bool;
 
-    public function getWithFilters(array $filters): Collection;
+    public function getWithFilters(array $filters): Builder;
 
     public function getStatistics(string $period): TicketStatisticsDto;
     
