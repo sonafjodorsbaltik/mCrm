@@ -21,12 +21,20 @@ class TicketController extends Controller
     public function index(Request $request)
     {
         // Get filters from request
-        $filters = $request->only(['status', 'date_from', 'date_to', 'email', 'phone']);
+        $filters = $request->only(['status', 'date_from', 'date_to']);
+        
+        // Handle unified search (email, phone, subject)
+        if ($search = $request->get('search')) {
+            $filters['search'] = $search;
+        }
         
         // Get tickets with pagination (20 per page)
         $tickets = $this->ticketRepository->getWithFilters($filters)->paginate(20);
         
-        return view('admin.tickets.index', compact('tickets'));
+        // Get all statuses for filter dropdown
+        $statuses = TicketStatusEnum::cases();
+        
+        return view('admin.tickets.index', compact('tickets', 'statuses'));
     }
 
     /**
@@ -61,5 +69,21 @@ class TicketController extends Controller
             'status' => $status->value,
             'label' => $status->label()
         ]);
+    }
+
+    /**
+     * Delete a ticket (soft delete)
+     */
+    public function destroy(Ticket $ticket)
+    {
+        // Check if user has permission to delete
+        $this->authorize('delete', $ticket);
+        
+        // Soft delete the ticket
+        $ticket->delete();
+        
+        return redirect()
+            ->route('admin.tickets.index')
+            ->with('success', 'Ticket deleted successfully');
     }
 }

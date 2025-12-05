@@ -72,6 +72,18 @@ class TicketRepository implements TicketRepositoryInterface
             });
         }
         
+        // Unified search across email, phone, and subject
+        if (isset($filters['search'])) {
+            $search = $filters['search'];
+            $query->where(function($q) use ($search) {
+                $q->where('subject', 'like', "%{$search}%")
+                  ->orWhereHas('customer', function($customerQuery) use ($search) {
+                      $customerQuery->where('email', 'like', "%{$search}%")
+                                   ->orWhere('phone', 'like', "%{$search}%");
+                  });
+            });
+        }
+        
         return $query->latest();
     }
 

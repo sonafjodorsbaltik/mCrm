@@ -1,6 +1,62 @@
 <x-app-layout>
     <h1 class="page-title">All Tickets</h1>
     
+    {{-- Success Message --}}
+    @if(session('success'))
+    <div class="alert-success">
+        {{ session('success') }}
+    </div>
+    @endif
+    
+    {{-- Filters Form --}}
+    <form method="GET" action="{{ route('admin.tickets.index') }}" class="filters-form">
+        <div class="filters-grid">
+            <!-- Status Filter -->
+            <div class="filter-group">
+                <label for="status">Status</label>
+                <select name="status" id="status" class="filter-input">
+                    <option value="">All Statuses</option>
+                    @foreach($statuses as $status)
+                        <option value="{{ $status->value }}" 
+                                {{ request('status') === $status->value ? 'selected' : '' }}>
+                            {{ $status->label() }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            <!-- Date From -->
+            <div class="filter-group">
+                <label for="date_from">From Date</label>
+                <input type="date" name="date_from" id="date_from" 
+                       value="{{ request('date_from') }}" class="filter-input">
+            </div>
+
+            <!-- Date To -->
+            <div class="filter-group">
+                <label for="date_to">To Date</label>
+                <input type="date" name="date_to" id="date_to" 
+                       value="{{ request('date_to') }}" class="filter-input">
+            </div>
+
+            <!-- Search -->
+            <div class="filter-group">
+                <label for="search">Search</label>
+                <input type="text" name="search" id="search" 
+                       value="{{ request('search') }}" 
+                       placeholder="Email, phone, or subject..."
+                       class="filter-input">
+            </div>
+
+            <!-- Actions -->
+            <div class="filter-actions">
+                <button type="submit" class="btn-primary">Filter</button>
+                <a href="{{ route('admin.tickets.index') }}" class="btn-secondary">Reset</a>
+            </div>
+        </div>
+    </form>
+    
+    {{-- Tickets Table --}}
     <table class="tickets-table">
         <thead>
             <tr>
@@ -29,6 +85,17 @@
                 <td>{{ $ticket->created_at->format('Y-m-d H:i') }}</td>
                 <td>
                     <a href="{{ route('admin.tickets.show', $ticket) }}">View</a>
+                    
+                    @can('delete', $ticket)
+                        <form method="POST" 
+                              action="{{ route('admin.tickets.destroy', $ticket) }}" 
+                              style="display: inline;"
+                              onsubmit="return confirm('Are you sure you want to delete ticket #{{ $ticket->id }}?')">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn-delete">Delete</button>
+                        </form>
+                    @endcan
                 </td>
             </tr>
             @empty
@@ -39,7 +106,7 @@
         </tbody>
     </table>
     
-    <!-- Pagination -->
+    {{-- Pagination --}}
     @if($tickets->hasPages())
     <div class="pagination-wrapper">
         {{ $tickets->appends(request()->query())->links('pagination::loft') }}

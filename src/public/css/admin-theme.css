@@ -403,3 +403,132 @@
     opacity: 0.3;
     cursor: not-allowed;
 }
+/* ===================================
+   FILTERS FORM
+   =================================== */
+
+.filters-form {
+    background: var(--card-light);
+    padding: 20px;
+    border-radius: 4px;
+    margin-bottom: 30px;
+    border: 1px solid var(--border-light);
+}
+
+.dark-theme .filters-form {
+    background: var(--card-dark);
+    border-color: var(--border-dark);
+}
+
+.filters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    align-items: end;
+}
+
+.filter-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: var(--text-light);
+}
+
+.dark-theme .filter-group label {
+    color: var(--text-dark);
+}
+
+.filter-input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--border-light);
+    border-radius: 4px;
+    background: var(--bg-light);
+    color: var(--text-light);
+    font-size: 14px;
+}
+
+.dark-theme .filter-input {
+    border-color: var(--border-dark);
+    background: var(--bg-dark);
+    color: var(--text-dark);
+}
+
+.filter-actions {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+}
+
+.btn-primary, .btn-secondary {
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-primary {
+    background: var(--accent);
+    color: white;
+    border: none;
+}
+
+.btn-primary:hover {
+    opacity: 0.9;
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--text-light);
+    border: 1px solid var(--border-light);
+}
+
+.dark-theme .btn-secondary {
+    color: var(--text-dark);
+    border-color: var(--border-dark);
+}
+
+.btn-secondary:hover {
+    background: var(--card-light);
+}
+
+.dark-theme .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* Delete Button */
+.btn-delete {
+    background: var(--error);
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+    margin-left: 8px;
+}
+
+.btn-delete:hover {
+    opacity: 0.9;
+}
+
+/* Success Message */
+.alert-success {
+    background: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+    padding: 12px 20px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.dark-theme .alert-success {
+    background: #1e3a22;
+    border-color: #2d5a34;
+    color: #7ed699;
+}
