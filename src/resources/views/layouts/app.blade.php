@@ -49,11 +49,84 @@
             </div>
         </header>
         
+        <!-- Custom Delete Confirmation Modal -->
+        <div id="deleteModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; align-items: center; justify-content: center;">
+            <div style="background: white; padding: 30px; border-radius: 8px; max-width: 400px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
+                <h2 style="margin: 0 0 15px 0; color: #333;">Confirm Deletion</h2>
+                <p id="deleteMessage" style="margin: 0 0 25px 0; color: #666;"></p>
+                <div style="display: flex; gap: 10px; justify-content: center;">
+                    <button id="deleteCancelBtn" style="padding: 10px 30px; background: #6c757d; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;">Cancel</button>
+                    <button id="deleteConfirmBtn" style="padding: 10px 30px; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;">Delete</button>
+                </div>
+            </div>
+        </div>
+
         <!-- Main Content -->
         <main class="admin-main">
             {{ $slot }}
         </main>
         
+        <script>
+            // Custom Modal Delete Confirmation
+            let formToSubmit = null;
+            const modal = document.getElementById('deleteModal');
+            const messageEl = document.getElementById('deleteMessage');
+            const confirmBtn = document.getElementById('deleteConfirmBtn');
+            const cancelBtn = document.getElementById('deleteCancelBtn');
+
+            // Show modal
+            function showDeleteModal(form, message) {
+                formToSubmit = form;
+                messageEl.textContent = message;
+                modal.style.display = 'flex';
+            }
+
+            // Hide modal
+            function hideDeleteModal() {
+                modal.style.display = 'none';
+                formToSubmit = null;
+            }
+
+            // Confirm button
+            confirmBtn.addEventListener('click', () => {
+                if (formToSubmit) {
+                    // Save form reference before hideModal clears it
+                    const form = formToSubmit;
+                    hideDeleteModal();
+                    // Remove class to prevent recursion
+                    form.classList.remove('delete-confirm');
+                    // Click the submit button
+                    const submitBtn = form.querySelector('button[type="submit"]');
+                    if (submitBtn) {
+                        submitBtn.click();
+                    } else {
+                        form.submit();
+                    }
+                }
+            });
+
+            // Cancel button
+            cancelBtn.addEventListener('click', hideDeleteModal);
+
+            // Click outside to close
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    hideDeleteModal();
+                }
+            });
+
+            // Intercept form submissions
+            document.addEventListener('submit', (e) => {
+                const form = e.target;
+                if (form.classList.contains('delete-confirm')) {
+                    e.preventDefault();
+                    const message = form.dataset.confirmMessage || 'Are you sure?';
+                    showDeleteModal(form, message);
+                }
+            });
+        </script>
+        
+        <!-- Theme Toggle Script -->
         <script>
             // Theme Toggle
             const themeToggle = document.getElementById('theme-toggle');
@@ -72,20 +145,6 @@
                 const isDark = document.body.classList.contains('dark-theme');
                 themeIcon.textContent = isDark ? '●' : '○';
                 localStorage.setItem('theme', isDark ? 'dark' : 'light');
-            });
-            
-            // Delete confirmation handler
-            document.addEventListener('submit', (e) => {
-                const form = e.target;
-                if (form.classList.contains('delete-form')) {
-                    const button = form.querySelector('[data-confirm]');
-                    if (button) {
-                        const message = button.getAttribute('data-confirm');
-                        if (!confirm(message)) {
-                            e.preventDefault();
-                        }
-                    }
-                }
             });
         </script>
         

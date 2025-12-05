@@ -91,10 +91,10 @@
                     <a href="{{ route('admin.tickets.show', $ticket) }}">View</a>
                     
                     @can('delete', $ticket)
-                        <form method="POST" action="{{ route('admin.tickets.destroy', $ticket) }}" style="display: inline;" class="delete-form">
+                        <form method="POST" action="{{ route('admin.tickets.destroy', $ticket) }}" class="delete-confirm" data-confirm-message="Are you sure you want to delete ticket #{{ $ticket->id }}?">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn-delete" data-confirm="Are you sure you want to delete ticket #{{ $ticket->id }}?">
+                            <button type="submit" class="btn-delete">
                                 Delete
                             </button>
                         </form>

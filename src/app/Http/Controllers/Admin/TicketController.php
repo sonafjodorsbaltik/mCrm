@@ -8,9 +8,12 @@ use App\Repositories\Contracts\TicketRepositoryInterface;
 use App\Enums\TicketStatusEnum;
 use App\Http\Requests\Admin\UpdateTicketStatusRequest;
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class TicketController extends Controller
 {
+    use AuthorizesRequests;
+
     public function __construct(
         private TicketRepositoryInterface $ticketRepository
     ) {}
