@@ -45,8 +45,8 @@
                         @if($user->id !== auth()->id())
                         <form method="POST" 
                               action="{{ route('admin.users.destroy', $user) }}" 
-                              style="display: inline;"
-                              onsubmit="return confirm('Delete user {{ $user->name }}?')">
+                              class="delete-form"
+                              data-confirm="Delete user {{ $user->name }}?">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn-delete">Delete</button>
@@ -60,4 +60,18 @@
             @endforeach
         </tbody>
     </table>
+    
+    <script>
+        // Handle delete confirmation
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.delete-form').forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    const message = this.dataset.confirm;
+                    if (!confirm(message)) {
+                        e.preventDefault();
+                    }
+                });
+            });
+        });
+    </script>
 </x-app-layout>
