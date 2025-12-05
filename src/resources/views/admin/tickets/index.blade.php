@@ -41,8 +41,8 @@
     
     <!-- Pagination -->
     @if($tickets->hasPages())
-    <div class="pagination-wrapper" style="margin-top: 30px;">
-        {{ $tickets->appends(request()->query())->links() }}
+    <div class="pagination-wrapper">
+        {{ $tickets->appends(request()->query())->links('pagination::loft') }}
     </div>
     @endif
 </x-app-layout>

@@ -10,17 +10,17 @@
         
         <div class="stat-card">
             <h3>New</h3>
-            <p class="stat-value status-new">{{ $stats->new }}</p>
+            <p class="stat-value" style="color: var(--accent);">{{ $stats->new }}</p>
         </div>
         
         <div class="stat-card">
             <h3>In Progress</h3>
-            <p class="stat-value status-in_progress">{{ $stats->inProgress }}</p>
+            <p class="stat-value" style="color: var(--accent);">{{ $stats->inProgress }}</p>
         </div>
         
         <div class="stat-card">
             <h3>Closed</h3>
-            <p class="stat-value status-closed">{{ $stats->closed }}</p>
+            <p class="stat-value" style="color: var(--accent);">{{ $stats->closed }}</p>
         </div>
     </div>
     

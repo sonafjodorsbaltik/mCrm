@@ -343,3 +343,63 @@
 .mb-30 {
     margin-bottom: 30px;
 }
+
+/* ===================================
+   PAGINATION - Minimal Style
+   =================================== */
+
+.pagination-nav {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.pagination-links {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.pagination-item {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    height: 36px;
+    padding: 0 10px;
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.dark-theme .pagination-item {
+    color: var(--text-dark);
+}
+
+/* Hover effect */
+.pagination-item:hover:not(.disabled):not(.active) {
+    background: var(--card-light);
+}
+
+.dark-theme .pagination-item:hover:not(.disabled):not(.active) {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* Active page - elegant accent */
+.pagination-item.active {
+    background: var(--accent);
+    color: white;
+    font-weight: 600;
+}
+
+/* Disabled - subtle */
+.pagination-item.disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
