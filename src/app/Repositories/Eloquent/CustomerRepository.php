@@ -17,7 +17,7 @@ class CustomerRepository implements CustomerRepositoryInterface
         return Customer::where('email', $email)->first();
     }
 
-    public function updateOrCreate(array $attributes): Customer
+    public function findOrCreateCustomer(array $attributes): Customer
     {
         return Customer::updateOrCreate(
             ['email' => $attributes['email']],

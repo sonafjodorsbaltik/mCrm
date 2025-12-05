@@ -14,7 +14,7 @@ class CustomerService
     
     public function findOrCreate(CreateTicketDto $dto): Customer
     {  
-        return $this->customerRepository->updateOrCreate([
+        return $this->customerRepository->findOrCreateCustomer([
             'email' => $dto->customerEmail,
             'phone' => $dto->customerPhone,
             'name' => $dto->customerName,

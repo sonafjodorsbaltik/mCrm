@@ -10,5 +10,5 @@ interface CustomerRepositoryInterface
 
     public function findByEmail(string $email): ?Customer;
 
-    public function updateOrCreate(array $attributes): Customer;
+    public function findOrCreateCustomer(array $attributes): Customer;
 }
