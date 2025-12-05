@@ -5,32 +5,66 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>@yield('title', 'Dashboard') - mCRM Admin</title>
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <!-- Loft Theme + Admin Theme -->
+        <link rel="stylesheet" href="{{ asset('css/loft-theme.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/admin-theme.css') }}">
+        
+        @stack('styles')
     </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
+    <body>
+        <!-- Theme Toggle Button -->
+        <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+            <span id="theme-icon">○</span>
+        </button>
 
-            <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endisset
+        <!-- Admin Header -->
+        <header class="admin-header">
+            <div class="container">
+                <h1>mCRM Admin</h1>
+                
+                <nav class="admin-nav">
+                    <a href="{{ route('admin.dashboard') }}">Dashboard</a>
+                    <a href="{{ route('admin.tickets.index') }}">Tickets</a>
+                </nav>
+                
+                <div class="user-menu">
+                    <span>{{ Auth::user()->name }}</span>
+                    <form method="POST" action="{{ route('logout') }}" style="display: inline;">
+                        @csrf
+                        <button type="submit" class="logout-btn">Logout</button>
+                    </form>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Main Content -->
+        <main class="admin-main">
+            {{ $slot }}
+        </main>
+        
+        <script>
+            // Theme Toggle
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeIcon = document.getElementById('theme-icon');
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
-        </div>
+            // Load saved theme
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-theme');
+                themeIcon.textContent = '●';
+            }
+
+            // Toggle on click
+            themeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('dark-theme');
+                const isDark = document.body.classList.contains('dark-theme');
+                themeIcon.textContent = isDark ? '●' : '○';
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            });
+        </script>
+        
+        @stack('scripts')
     </body>
 </html>

@@ -1,0 +1,345 @@
+/* ===================================
+   Admin Panel Styles
+   Extends loft-theme.css
+   =================================== */
+
+/* Admin Header */
+.admin-header {
+    background: var(--card-light);
+    border-bottom: 2px solid var(--border-light);
+    padding: 20px 0;
+}
+
+.dark-theme .admin-header {
+    background: var(--card-dark);
+    border-bottom: 2px solid var(--border-dark);
+}
+
+.admin-header .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.admin-header h1 {
+    color: var(--text-light);
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.dark-theme .admin-header h1 {
+    color: var(--text-dark);
+}
+
+/* Admin Navigation */
+.admin-nav {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.admin-nav a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.dark-theme .admin-nav a {
+    color: var(--text-dark);
+}
+
+.admin-nav a:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.dark-theme .admin-nav a:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* User Menu */
+.user-menu {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.user-menu span {
+    color: var(--text-light);
+    font-weight: 500;
+}
+
+.dark-theme .user-menu span {
+    color: var(--text-dark);
+}
+
+.logout-btn {
+    background: none;
+    border: 1px solid var(--border-light);
+    color: var(--text-light);
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.dark-theme .logout-btn {
+    border-color: var(--border-dark);
+    color: var(--text-dark);
+}
+
+.logout-btn:hover {
+    background: var(--error);
+    color: white;
+    border-color: var(--error);
+}
+
+/* Main Content */
+.admin-main {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.page-title {
+    font-size: 28px;
+    color: var(--text-light);
+    margin-bottom: 30px;
+}
+
+.dark-theme .page-title {
+    color: var(--text-dark);
+}
+
+/* Statistics Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.stat-card {
+    background: var(--card-light);
+    padding: 20px;
+    border-radius: 4px;
+    border: 2px solid var(--border-light);
+}
+
+.dark-theme .stat-card {
+    background: var(--card-dark);
+    border-color: var(--border-dark);
+}
+
+.stat-card h3 {
+    color: var(--text-light);
+    font-size: 14px;
+    margin: 0 0 10px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.dark-theme .stat-card h3 {
+    color: var(--text-dark);
+}
+
+.stat-value {
+    font-size: 32px;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* Tickets Table */
+.tickets-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--card-light);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.dark-theme .tickets-table {
+    background: var(--card-dark);
+}
+
+.tickets-table thead {
+    background: var(--bg-light);
+    border-bottom: 2px solid var(--border-light);
+}
+
+.dark-theme .tickets-table thead {
+    background: var(--bg-dark);
+    border-bottom-color: var(--border-dark);
+}
+
+.tickets-table th {
+    padding: 12px;
+    text-align: left;
+    color: var(--text-light);
+    font-weight: 600;
+}
+
+.dark-theme .tickets-table th {
+    color: var(--text-dark);
+}
+
+.tickets-table td {
+    padding: 12px;
+    color: var(--text-light);
+    border-bottom: 1px solid var(--border-light);
+}
+
+.dark-theme .tickets-table td {
+    color: var(--text-dark);
+    border-bottom-color: var(--border-dark);
+}
+
+.tickets-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.tickets-table a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.tickets-table a:hover {
+    text-decoration: underline;
+}
+
+/* Status Badges */
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.status-new {
+    background: #ffc107;
+    color: #000;
+}
+
+.status-in_progress {
+    background: #17a2b8;
+    color: #fff;
+}
+
+.status-closed {
+    background: #28a745;
+    color: #fff;
+}
+
+/* Ticket Details */
+.ticket-details {
+    display: grid;
+    gap: 30px;
+}
+
+.detail-card {
+    background: var(--card-light);
+    padding: 25px;
+    border-radius: 4px;
+    border: 2px solid var(--border-light);
+}
+
+.dark-theme .detail-card {
+    background: var(--card-dark);
+    border-color: var(--border-dark);
+}
+
+.detail-card h3 {
+    color: var(--text-light);
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+
+.dark-theme .detail-card h3 {
+    color: var(--text-dark);
+}
+
+.detail-card p {
+    color: var(--text-light);
+    line-height: 1.6;
+    margin: 0 0 10px 0;
+}
+
+.dark-theme .detail-card p {
+    color: var(--text-dark);
+}
+
+.detail-card .subject-text {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+/* Status Select */
+.status-select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-light);
+    border-radius: 4px;
+    background: var(--bg-light);
+    color: var(--text-light);
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.dark-theme .status-select {
+    border-color: var(--border-dark);
+    background: var(--bg-dark);
+    color: var(--text-dark);
+}
+
+/* Attachments List */
+.attachment-link {
+    display: block;
+    color: var(--accent);
+    text-decoration: none;
+    padding: 8px 0;
+}
+
+.attachment-link:hover {
+    text-decoration: underline;
+}
+
+/* Back Link */
+.back-link {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+/* Utilities */
+.text-muted {
+    opacity: 0.7;
+    font-size: 14px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.mb-20 {
+    margin-bottom: 20px;
+}
+
+.mb-30 {
+    margin-bottom: 30px;
+}
