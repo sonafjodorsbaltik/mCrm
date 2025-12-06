@@ -1,59 +1,156 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# mCRM — Mini CRM для сбора заявок
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Мини-CRM система для сбора и обработки заявок с сайта через универсальный виджет.
 
-## About Laravel
+## Технологии
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Backend:** Laravel 12, PHP 8.4
+- **Database:** MySQL 8.0
+- **Cache:** Redis
+- **Packages:** spatie/laravel-permission, spatie/laravel-medialibrary, giggsey/libphonenumber-for-php
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Быстрый старт (Docker)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+```bash
+# Клонировать репозиторий
+git clone <repository-url>
+cd mCrm
 
-## Learning Laravel
+# Запустить контейнеры
+docker-compose up -d
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+# Установить зависимости
+docker-compose exec app composer install
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+# Настроить окружение
+cp src/.env.example src/.env
+docker-compose exec app php artisan key:generate
 
-## Laravel Sponsors
+# Миграции и seed данные
+docker-compose exec app php artisan migrate --seed
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+# Создать символическую ссылку для storage
+docker-compose exec app php artisan storage:link
+```
 
-### Premium Partners
+Приложение доступно по адресу: **http://localhost**
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## Тестовые данные
 
-## Contributing
+После выполнения `php artisan migrate --seed` создаются:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+| Email | Пароль | Роль |
+|-------|--------|------|
+| admin@test.com | password | Admin |
+| manager@test.com | password | Manager |
 
-## Code of Conduct
+Также создаются тестовые клиенты и заявки.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Встраивание виджета (iframe)
 
-## Security Vulnerabilities
+Виджет обратной связи можно встроить на любой сайт:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```html
+<iframe 
+    src="http://localhost/widget" 
+    width="100%" 
+    height="600" 
+    frameborder="0"
+    style="max-width: 500px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+</iframe>
+```
 
-## License
+## API
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### POST /api/v1/tickets — Создание заявки
+
+```bash
+curl -X POST http://localhost/api/v1/tickets \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/json" \
+  -d '{
+    "name": "Иван Иванов",
+    "phone": "+380501234567",
+    "email": "ivan@example.com",
+    "subject": "Вопрос по услуге",
+    "content": "Текст сообщения",
+    "files": []
+  }'
+```
+
+**Ответ (201 Created):**
+```json
+{
+  "data": {
+    "id": 1,
+    "subject": "Вопрос по услуге",
+    "content": "Текст сообщения",
+    "status": "Новая",
+    "status_code": "new",
+    "created_at": "2025-12-06T19:00:00.000000Z",
+    "customer": {
+      "name": "Иван Иванов",
+      "email": "ivan@example.com",
+      "phone": "+380501234567"
+    },
+    "files": []
+  }
+}
+```
+
+### GET /api/v1/tickets/statistics — Статистика (требует авторизации)
+
+```bash
+curl -X GET "http://localhost/api/v1/tickets/statistics?period=week" \
+  -H "Accept: application/json" \
+  -H "Authorization: Bearer {token}"
+```
+
+**Параметры:**
+- `period`: `day` | `week` | `month` (по умолчанию: `day`)
+
+**Ответ:**
+```json
+{
+  "data": {
+    "period": "week",
+    "total": 25,
+    "new": 10,
+    "in_progress": 8,
+    "closed": 7
+  }
+}
+```
+
+## Структура проекта
+
+```
+app/
+├── Models/           # Eloquent модели
+├── Services/         # Бизнес-логика
+├── Repositories/     # Доступ к данным
+├── DTOs/             # Data Transfer Objects
+├── Enums/            # Перечисления (TicketStatusEnum)
+├── Observers/        # Eloquent Observers
+├── Http/
+│   ├── Controllers/  # API, Admin, Widget контроллеры
+│   ├── Requests/     # Form Requests для валидации
+│   └── Resources/    # API Resources
+└── Rules/            # Custom Validation Rules
+```
+
+## Админ-панель
+
+Доступна по адресу `/admin` после авторизации:
+
+- **Dashboard** — статистика и последние заявки
+- **Tickets** — список заявок с фильтрацией
+- **Users** — управление менеджерами (только для Admin)
+
+## Rate Limiting
+
+Ограничение: не более 1 заявки в сутки с одного телефона И email.
+
+## Лицензия
+
+MIT
