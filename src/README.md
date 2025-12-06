@@ -60,6 +60,32 @@ docker-compose exec app php artisan storage:link
 </iframe>
 ```
 
+### Пример: виджет в модальном окне
+
+Для вызова виджета по кнопке используйте модальное окно:
+
+```html
+<!-- Кнопка вызова -->
+<button onclick="document.getElementById('widgetModal').style.display='flex'">
+    💬 Обратная связь
+</button>
+
+<!-- Модальное окно -->
+<div id="widgetModal" style="display:none; position:fixed; top:0; left:0; 
+     width:100%; height:100%; background:rgba(0,0,0,0.6); 
+     justify-content:center; align-items:center; z-index:1000;">
+    <div style="background:white; border-radius:16px; position:relative;">
+        <button onclick="document.getElementById('widgetModal').style.display='none'"
+                style="position:absolute; top:10px; right:15px; border:none; 
+                       background:none; font-size:1.5rem; cursor:pointer;">×</button>
+        <iframe src="http://localhost/widget" width="450" height="580" 
+                style="border:none; display:block;"></iframe>
+    </div>
+</div>
+```
+
+Полный пример — файл `test-widget.html` в корне проекта.
+
 ## API
 
 ### POST /api/v1/tickets — Создание заявки
