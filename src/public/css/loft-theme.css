@@ -12,7 +12,7 @@
     --text-secondary-light: #6b5e58;
     --border-light: #e3d5ca;
     --input-bg-light: #ffffff;
-    
+
     /* Loft Dark Theme */
     --bg-dark: #382e2c;
     --card-dark: #453a38;
@@ -20,17 +20,17 @@
     --text-secondary-dark: #c4b5a8;
     --border-dark: #302826;
     --input-bg-dark: #302826;
-    
+
     /* Accent Color (Emerald Green - Leather Couch) */
     --accent: #008080;
     --accent-hover: #006666;
     --accent-light: rgba(0, 128, 128, 0.1);
-    
+
     /* Error Colors */
     --error: #d9534f;
     --error-bg-light: #fdecea;
     --error-bg-dark: #4a3332;
-    
+
     /* Success Colors */
     --success: #5cb85c;
     --success-bg-light: #edf7ed;
@@ -287,8 +287,53 @@ body.dark-theme {
         opacity: 0;
         transform: translateY(-10px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+/* Table Action Buttons */
+.actions-cell {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.actions-cell form {
+    margin: 0;
+}
+
+.btn-view {
+    display: inline-block;
+    padding: 6px 12px;
+    background: var(--accent);
+    color: white !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.btn-view:hover {
+    background: var(--accent-hover);
+    color: white !important;
+}
+
+.btn-delete {
+    padding: 6px 12px;
+    background: var(--error);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-delete:hover {
+    background: #c9302c;
 }

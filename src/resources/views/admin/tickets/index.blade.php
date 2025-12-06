@@ -88,17 +88,19 @@
                 </td>
                 <td>{{ $ticket->created_at->format('Y-m-d H:i') }}</td>
                 <td>
-                    <a href="{{ route('admin.tickets.show', $ticket) }}">View</a>
-                    
-                    @can('delete', $ticket)
-                        <form method="POST" action="{{ route('admin.tickets.destroy', $ticket) }}" class="delete-confirm" data-confirm-message="Are you sure you want to delete ticket #{{ $ticket->id }}?">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn-delete">
-                                Delete
-                            </button>
-                        </form>
-                    @endcan
+                    <div class="actions-cell">
+                        <a href="{{ route('admin.tickets.show', $ticket) }}" class="btn-view">View</a>
+                        
+                        @can('delete', $ticket)
+                            <form method="POST" action="{{ route('admin.tickets.destroy', $ticket) }}" class="delete-confirm" data-confirm-message="Are you sure you want to delete ticket #{{ $ticket->id }}?">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn-delete">
+                                    Delete
+                                </button>
+                            </form>
+                        @endcan
+                    </div>
                 </td>
             </tr>
             @empty
