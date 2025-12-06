@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\StoreUserRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Spatie\Permission\Models\Role;
@@ -40,15 +40,11 @@ class UserController extends Controller
     /**
      * Store new user (Admin only - create Manager)
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
         $this->authorize('create', User::class);
         
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:8|confirmed',
-        ]);
+        $validated = $request->validated();
         
         $user = \Illuminate\Support\Facades\DB::transaction(function () use ($validated) {
             $user = User::create([
