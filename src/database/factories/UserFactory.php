@@ -33,6 +33,11 @@ class UserFactory extends Factory
         ];
     }
 
+    /**
+     * Configure the user as an admin.
+     * 
+     * Assigns 'admin' role after user creation.
+     */
     public function asAdmin(): static
     {
         return $this->afterCreating(function (User $user) {
@@ -40,6 +45,11 @@ class UserFactory extends Factory
         });
     }
 
+    /**
+     * Configure the user as a manager.
+     * 
+     * Assigns 'manager' role after user creation.
+     */
     public function asManager(): static
     {
         return $this->afterCreating(function (User $user) {

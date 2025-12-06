@@ -13,6 +13,12 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
+/**
+ * Controller for managing tickets in admin panel.
+ * 
+ * Handles ticket listing, viewing, status updates, and deletion.
+ * Accessible by admin and manager roles.
+ */
 class TicketController extends Controller
 {
     use AuthorizesRequests;

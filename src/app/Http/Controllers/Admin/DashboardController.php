@@ -6,6 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Services\Ticket\TicketStatisticsService;
 use App\Repositories\Contracts\TicketRepositoryInterface;
 
+/**
+ * Controller for admin dashboard.
+ * 
+ * Displays statistics and recent tickets overview.
+ */
 class DashboardController extends Controller
 {
     public function __construct(

@@ -11,6 +11,12 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Spatie\Permission\Models\Role;
 
+/**
+ * Controller for user management in admin panel.
+ * 
+ * Handles listing, creating, and deleting manager users.
+ * Accessible only by admin role.
+ */
 class UserController extends Controller
 {
     use AuthorizesRequests;

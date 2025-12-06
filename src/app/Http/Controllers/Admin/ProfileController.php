@@ -9,6 +9,11 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Illuminate\Validation\Rules\Password;
 
+/**
+ * Controller for user profile management.
+ * 
+ * Handles password change functionality for authenticated users.
+ */
 class ProfileController extends Controller
 {
     /**
