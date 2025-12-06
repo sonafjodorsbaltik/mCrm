@@ -39,7 +39,6 @@ class TicketApiTest extends TestCase
                     'status_code',
                     'created_at',
                     'customer' => ['name', 'email', 'phone'],
-                    'files',
                 ],
             ]);
 

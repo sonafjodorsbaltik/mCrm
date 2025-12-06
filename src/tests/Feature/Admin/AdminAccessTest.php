@@ -21,9 +21,9 @@ class AdminAccessTest extends TestCase
     {
         parent::setUp();
         
-        // Create roles
-        Role::create(['name' => 'admin']);
-        Role::create(['name' => 'manager']);
+        // Ensure roles exist (may already exist from migrations)
+        Role::firstOrCreate(['name' => 'admin']);
+        Role::firstOrCreate(['name' => 'manager']);
     }
 
     /**
@@ -31,7 +31,7 @@ class AdminAccessTest extends TestCase
      */
     public function test_guest_cannot_access_admin(): void
     {
-        $response = $this->get('/admin');
+        $response = $this->get('/admin/dashboard');
 
         $response->assertRedirect('/login');
     }
