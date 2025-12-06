@@ -7,6 +7,8 @@ use App\Http\Requests\Admin\StoreUserRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -15,7 +17,7 @@ class UserController extends Controller
     /**
      * Display list of users (Admin only)
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('viewAny', User::class);
         
@@ -27,7 +29,7 @@ class UserController extends Controller
     /**
      * Show create user form (Admin only)
      */
-    public function create()
+    public function create(): View
     {
         $this->authorize('create', User::class);
         
@@ -40,7 +42,7 @@ class UserController extends Controller
     /**
      * Store new user (Admin only - create Manager)
      */
-    public function store(StoreUserRequest $request)
+    public function store(StoreUserRequest $request): RedirectResponse
     {
         $this->authorize('create', User::class);
         
@@ -67,7 +69,7 @@ class UserController extends Controller
     /**
      * Delete user (Admin only - cannot delete self)
      */
-    public function destroy(User $user)
+    public function destroy(User $user): RedirectResponse
     {
         $this->authorize('delete', $user);
         

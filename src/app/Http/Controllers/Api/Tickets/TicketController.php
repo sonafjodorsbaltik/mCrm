@@ -14,7 +14,7 @@ class TicketController extends Controller
         private TicketService $ticketService
     ) {}
 
-    public function store(StoreTicketRequest $request)
+    public function store(StoreTicketRequest $request): TicketDetailResource
     {
         $dto = CreateTicketDto::fromArray($request->validated());
         $ticket = $this->ticketService->createTicket($dto);

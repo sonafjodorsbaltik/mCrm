@@ -8,6 +8,9 @@ use App\Repositories\Contracts\TicketRepositoryInterface;
 use App\Enums\TicketStatusEnum;
 use App\Http\Requests\Admin\UpdateTicketStatusRequest;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class TicketController extends Controller
@@ -21,7 +24,7 @@ class TicketController extends Controller
     /**
      * Display a listing of tickets
      */
-    public function index(Request $request)
+    public function index(Request $request): View
     {
         // Get filters from request
         $filters = $request->only(['status', 'date_from', 'date_to']);
@@ -43,7 +46,7 @@ class TicketController extends Controller
     /**
      * Display a single ticket
      */
-    public function show(Ticket $ticket)
+    public function show(Ticket $ticket): View
     {
         // Eager load relationships
         $ticket->load(['customer', 'media']);
@@ -57,7 +60,7 @@ class TicketController extends Controller
     /**
      * Update ticket status (AJAX)
      */
-    public function updateStatus(Ticket $ticket, UpdateTicketStatusRequest $request)
+    public function updateStatus(Ticket $ticket, UpdateTicketStatusRequest $request): JsonResponse
     {
         // Validation already passed via Form Request
         // Get validated status as Enum
@@ -77,7 +80,7 @@ class TicketController extends Controller
     /**
      * Delete a ticket (soft delete)
      */
-    public function destroy(Ticket $ticket)
+    public function destroy(Ticket $ticket): RedirectResponse
     {
         // Check if user has permission to delete
         $this->authorize('delete', $ticket);

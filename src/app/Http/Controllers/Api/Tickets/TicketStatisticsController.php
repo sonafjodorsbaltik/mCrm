@@ -13,7 +13,7 @@ class TicketStatisticsController extends Controller
         private TicketStatisticsService $statisticsService
     ) {}
 
-    public function index(Request $request)
+    public function index(Request $request): StatisticsResource
     {
         $period = $request->input('period', 'day');
         

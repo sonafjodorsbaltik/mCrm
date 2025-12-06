@@ -13,7 +13,7 @@ class DashboardController extends Controller
         private TicketRepositoryInterface $ticketRepository
     ) {}
 
-    public function index()
+    public function index(): \Illuminate\View\View
     {
         // Get statistics for the last week
         $stats = $this->statisticsService->getStatistics('week');

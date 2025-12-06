@@ -5,6 +5,12 @@ namespace App\Http\Requests\Admin;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Enums\TicketStatusEnum;
 
+/**
+ * Form Request for updating ticket status via AJAX.
+ * 
+ * Validates status value and provides helper method
+ * to get the validated status as an Enum instance.
+ */
 class UpdateTicketStatusRequest extends FormRequest
 {
     /**
