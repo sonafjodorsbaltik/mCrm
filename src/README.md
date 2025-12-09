@@ -165,6 +165,8 @@ app/
 └── Rules/            # Custom Validation Rules
 ```
 
+> Подробное описание архитектурных решений — см. [ARCHITECTURE.md](ARCHITECTURE.md)
+
 ## Админ-панель
 
 Доступна по адресу `/admin` после авторизации:
