@@ -27,15 +27,19 @@ class E164PhoneNumber implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
+        // Get singleton instance of libphonenumber parser
         $phoneUtil = PhoneNumberUtil::getInstance();
 
         try {
+            // Parse the phone number (null = auto-detect country from number itself)
             $numberProto = $phoneUtil->parse($value, null);
 
+            // Check if the parsed number is valid for its country
             if (!$phoneUtil->isValidNumber($numberProto)) {
                 $fail(__('validation.phone_valid'));
             }
         } catch (NumberParseException $e) {
+            // Parsing failed - invalid format (missing +, wrong length, etc.)
             $fail(__('validation.phone_format'));
         }
     }

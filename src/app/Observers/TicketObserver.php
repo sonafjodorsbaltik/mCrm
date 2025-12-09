@@ -23,6 +23,8 @@ class TicketObserver
      */
     public function updating(Ticket $ticket): void
     {
+        // Only set replied_at if status changed AND new status requires it
+        // (IN_PROGRESS or CLOSED indicate manager has responded)
         if ($ticket->isDirty('status') && $ticket->status->requiresReplyDate()) {
             $ticket->replied_at = now();
         }

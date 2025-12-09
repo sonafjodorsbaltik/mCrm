@@ -43,19 +43,24 @@ class TicketService
      */
     public function createTicket(CreateTicketDto $dto): Ticket
     {
+        // Check rate limit before processing (1 ticket per 24h per customer)
         if (!$this->rateLimitService->canSubmitTicket($dto->customerPhone, $dto->customerEmail)) {
             throw new TooManyRequestsHttpException(
-                retryAfter: 86400,
+                retryAfter: 86400, // 24 hours in seconds
                 message: __('validation.rate_limit_ticket')
             );
         }
 
+        // Wrap all operations in a transaction for data integrity
         return DB::transaction(function () use ($dto) {
 
+            // Step 1: Find or create customer by email
             $customer = $this->customerService->findOrCreate($dto);
 
+            // Step 2: Create ticket with 'new' status
             $ticket = $this->ticketRepository->create($dto, $customer->id);
 
+            // Step 3: Attach any uploaded files to the ticket
             $this->ticketFileService->attachFiles($ticket, $dto->files);
 
             return $ticket;
