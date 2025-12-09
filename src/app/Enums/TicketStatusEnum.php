@@ -24,16 +24,15 @@ enum TicketStatusEnum: string
     }
 
     /**
-     * Get human-readable label for the status.
+     * Get localized human-readable label for the status.
+     * 
+     * Uses Laravel __() helper for i18n support.
+     * Translations defined in: lang/{locale}/enums.php
      *
-     * @return string Display label (e.g., 'In Progress')
+     * @return string Localized display label (e.g., 'In Progress' or 'В работе')
      */
     public function label(): string {
-        return match($this) {
-            self::NEW => 'New',
-            self::IN_PROGRESS => 'In Progress',
-            self::CLOSED => 'Closed',
-        };
+        return __("enums.ticket_status.{$this->value}");
     }
     
     /**
