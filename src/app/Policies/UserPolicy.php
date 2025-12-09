@@ -4,6 +4,12 @@ namespace App\Policies;
 
 use App\Models\User;
 
+/**
+ * Policy for User model authorization.
+ * 
+ * Defines who can view, create, and delete users.
+ * Only admins with 'manage users' permission have access.
+ */
 class UserPolicy
 {
     /**

@@ -5,6 +5,11 @@ namespace App\Policies;
 use App\Models\Ticket;
 use App\Models\User;
 
+/**
+ * Policy for Ticket model authorization.
+ * 
+ * Defines who can delete tickets based on permissions.
+ */
 class TicketPolicy
 {
     /**

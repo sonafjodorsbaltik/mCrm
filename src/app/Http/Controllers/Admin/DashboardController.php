@@ -18,6 +18,13 @@ class DashboardController extends Controller
         private TicketRepositoryInterface $ticketRepository
     ) {}
 
+    /**
+     * Display the admin dashboard.
+     * 
+     * Shows weekly statistics and 5 most recent tickets.
+     *
+     * @return \Illuminate\View\View Dashboard view with stats and recent tickets
+     */
     public function index(): \Illuminate\View\View
     {
         // Get statistics for the last week
